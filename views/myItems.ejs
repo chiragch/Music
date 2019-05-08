@@ -1,0 +1,55 @@
+
+        <% include ./partials/header.ejs %>
+        <% include ./partials/site-navigation.ejs %>
+        <div class="row row-override">
+            <% include ./partials/user-navigation.ejs %>
+            <main class="col-sm-9">
+                <div class="main-content-div">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                            <th scope="col" class="table-width">Item</th>
+                            <th scope="col" class="table-width">Category</th>
+                            <th scope="col" class="table-width">My Rating</th>
+                            <th scope="col" class="table-width">Used it</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if(data.userProfile!=null){%>
+                                <% for(var i=0; i<data.userProfile.userItemList.length; i++){ %>
+                                    <tr>
+                                        <th scope="row" class="text-align-left">
+                                            <%= data.userProfile.userItemList[i].itemName%></th>
+                                        <th class="text-align-left"><%= data.userProfile.userItemList[i].catalogCategory%></th>
+                                        <th>
+                                            <% for(var j=1; j<=5; j++){ %>
+                                            <span class="fa fa-star <%if(j<=data.userProfile.userItemList[i].rating){%>checked<%}%>"></span>
+                                            <% } %>
+                                        </th>
+                                        <th>
+                                            <%= data.userProfile.userItemList[i].madeIt%>
+                                            <a class="btn btn-primary btn-sm" href="/categories/item/<%=data.userProfile.userItemList[i].itemCode%>/feedback" role="button">Update</a>
+                                            <a class="btn btn-primary btn-sm" href="/myItems/delete/<%=data.userProfile.userItemList[i].itemCode%>" role="button">Delete</a>
+                                        </th>
+                                    </tr>
+                                <% } %>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-12 main-content-div">
+                    <a href="/categories" class="btn btn-primary main-content-div">Back</a>
+                </div>
+                <div class="col-sm-12 main-content-div mt-5">
+                    <i class="fa fas fa-bookmark color-red"></i>
+                    Indicates that this Item belongs to you
+                    <br>Click <a href="#">here</a> to share a Item!
+                </div>
+            </main>
+        </div>
+        <% include ./partials/footer.ejs %>
+    </div>
+</body>
+</html>
+
+

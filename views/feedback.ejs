@@ -1,0 +1,73 @@
+
+        <% include ./partials/header.ejs %>
+        <% include ./partials/site-navigation.ejs %>
+        <div class="row row-override">
+            <% include ./partials/user-navigation.ejs %>
+            <main class="col-sm-9">
+                <h3>Give your feedback for</h3>
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="<%= data.item.imageUrl%>" alt="<%= data.item.itemName%>" height="200"/>
+                    </div>
+                    <div class="col-sm-9">
+                        <h4 class="bolder"><%= data.item.itemName%></h4>
+                        <h5><%= data.item.catalogCategory%></h5>
+                        <p><%= data.item.description[0]%></p>
+                    </div>
+                </div>
+                
+                <div class="row p-2">
+                    <% if(data.errorMessage!=undefined && data.errorMessage.length>0) { 
+                        for (let index = 0; index < data.errorMessage.length; index++) {
+                            var element = JSON.stringify(data.errorMessage[index].msg);
+                            element = element.substr(1,element.length-2) %>
+                        <h6 class="col-sm-12 font-weight-normal alert alert-danger" role="alert"><%=element%></h6>
+                    <% }} %>
+                </div>
+
+                <form method="POST" action="/update/feedback/<%= data.item.itemCode%>">
+                    <input type="hidden" id="ratingHidden" name="feedbackHidden" value="rating">
+                    <input type="hidden" name="itemCode" value="<%= data.item.itemCode%>">
+                    <input type="hidden" name="itemList" value="<%= data.item.itemCode%>">
+                    <div class="form-group row">
+                        <label for="staticRating" class="col-md-2 col-form-label">Rating</label>
+                        <div class="col-md-6">
+                            <select class="form-control" id="ratingSelect" name="rating">
+                            <option value="0">0 Star</option>
+                            <option value="1">1 Star</option>
+                            <option value="2">2 Star</option>
+                            <option value="3">3 Star</option>
+                            <option value="4">4 Star</option>
+                            <option value="5">5 Star</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary main-content-div">Confirm Rating</button>
+                        </div>
+                    </div>
+                </form>
+                <form method="POST" action="/update/feedback/<%= data.item.itemCode%>">
+                    <input type="hidden" id="madeItHidden" name="feedbackHidden" value="madeIt">
+                    <input type="hidden" name="itemCode" value="<%= data.item.itemCode%>">
+                    <input type="hidden" name="itemList" value="<%= data.item.itemCode%>">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="madeItRadio" id="madeIt1" value="true">
+                        <label class="form-check-label" for="madeIt1">True</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="madeItRadio" id="madeIt2" value="false">
+                        <label class="form-check-label" for="madeIt2">False</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <button type="submit" class="btn btn-primary main-content-div">Used It</button>
+                    </div>
+                </form>
+                <div class="row">
+                    <a href="/categories" class="btn btn-primary main-content-div">Back</a>
+                </div>
+            </main>
+        </div>
+        <% include ./partials/footer.ejs %>
+    </div>
+</body>
+</html>
