@@ -64,6 +64,6 @@ app.use('/', catalogController);
 
 app.listen(8080,function(){
     console.log('app started');
-    console.log('listening on port 8080');
+    console.log('listening on port 8000');
 	process.exit();
 });
